@@ -9,8 +9,13 @@ import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
 
-# Set dashboard layout to wide
-st.set_page_config(layout="wide")
+# Set dashboard layout to wide and sidebar expanded
+st.set_page_config(layout="wide", page_title="Global Demand and Supply Elasticities Dashboard", initial_sidebar_state="expanded")
+
+# Add dashboard title
+st.title("Global Demand and Supply Elasticities")
+
+st.markdown("This dashboard shows provisional results from the [Global demand and supply elasticities and the impact of tariff shocks](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5217187) (*v1, 14 Apr 2025*) working paper. The dashboard was last updated on *22 Jun 2025*. For more information and feedback, please contact Asjad Naqvi (asjad.naqvi@wifo.ac.at).")
 
 # Tabs for navigation
 main_tabs = st.tabs(["Dashboard", "About"])
@@ -71,6 +76,24 @@ with main_tabs[1]:
 
 with main_tabs[0]:
 
+    @st.cache_data
+    def load_data():
+        return pd.read_csv("elasticities_4sec_shock.csv")
+
+    df = load_data()
+
+    # Strip leading/trailing spaces and normalise case
+    if "type" in df.columns:
+        df["type"] = df["type"].astype(str).str.strip().str.lower()
+
+    if "name2" in df.columns:
+        df["name2"] = df["name2"].astype(str).str.strip()
+
+    # Now place the selectbox here, after df and df['name2'] are ready
+    country = st.selectbox("Select a Country", sorted(df["name2"].unique()))
+
+
+
     # Variable labels for clarity in plots
     variable_labels = {
         "share1": "Intermediate - Domestic",
@@ -91,19 +114,7 @@ with main_tabs[0]:
         "eta_4": "Final - Foreign",
         
     }
-    @st.cache_data
-    def load_data():
-        return pd.read_csv("elasticities_4sec_shock.csv")
 
-    df = load_data()
-
-    # Strip leading/trailing spaces and normalise case
-    if "type" in df.columns:
-        df["type"] = df["type"].astype(str).str.strip().str.lower()
-
-    # Strip spaces from country names to ensure exact matching in the dropdown
-    if "name2" in df.columns:
-        df["name2"] = df["name2"].astype(str).str.strip()
 
     # Split data into demand and supply
     if 'type' in df.columns:
@@ -112,9 +123,6 @@ with main_tabs[0]:
     else:
         df_demand = df.copy()
         df_supply = df.copy()
-
-    # Top dropdown control
-    country = st.sidebar.selectbox("Select a Country", sorted(df["name2"].unique()))
 
     # Filter data for selected country
     country_supply = df_supply[df_supply["name2"] == country]
@@ -232,7 +240,8 @@ with main_tabs[0]:
     global_max_eta =  1.5
 
     # Toggle view mode
-    view_mode = st.sidebar.radio("Select View Mode:", ["Heatmaps", "Detailed Plots"], horizontal=False)
+    # view_mode = st.sidebar.radio("Select View Mode:", ["Heatmaps", "Detailed Plots"], horizontal=False)
+    view_mode = "Heatmaps"  # Force only Heatmaps mode, disables Detailed Plots
 
     epsilon_cols = [f"epsilon_{p}_{q}" for q in range(1, 5) for p in range(1, 5)]
     valid_epsilons = [col for col in epsilon_cols if col in demand_group.columns or col in supply_group.columns]
@@ -246,8 +255,7 @@ with main_tabs[0]:
     )
 
     st.markdown("### Expenditure Shares and Prices")
-    st.markdown('The plots below show expenditure shares and prices (unit costs) split by demand and supply extracted from the pooled 2021-2023 MRIO data (see Notes tab above). Heatmaps shows averages while Detailed plots show the full data distribution.')
-    st.markdown("Average shares add up to one in the demand and supply columns respectively. Prices are calculated as nominal over real values and are effectively relative unit values.")
+    st.markdown('The plots below show expenditure shares and prices (unit costs) split by demand and supply extracted from the pooled 2021-2023 MRIO data (the About tab). Average shares add up to one in the demand and supply columns respectively. Prices are nominal divided by real values.')
 
 
     #####################################
