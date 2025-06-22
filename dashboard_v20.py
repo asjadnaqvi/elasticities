@@ -13,27 +13,65 @@ import plotly.express as px
 st.set_page_config(layout="wide")
 
 # Tabs for navigation
-main_tabs = st.tabs(["Dashboard", "Notes"])
+main_tabs = st.tabs(["Dashboard", "About"])
 
+
+# About tab
+#with main_tabs[1]:
+#    st.markdown("This dashboard shows _provisional results_ from the **Global demand and supply elasticities and the impact of tariff shocks** (v1) working paper posted on 14th April 2025.")
+#    st.markdown("The paper can be downloaded either from the [WIFO Working Paper series](https://www.wifo.ac.at/en/publication/424385/) or [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5217187).")
+#    st.markdown("The paper estimates a [Quadratic Almost Ideal Demand System (QUAIDS)](https://en.wikipedia.org/wiki/Almost_ideal_demand_system) demand and supply elasticities using the 2021-2023 pooled data from the Asian Development Bank's (ADB) [Multi-Regional Input-Output (MRIO)](https://www.adb.org/what-we-do/data/regional-input-output-tables) database. The database covers 62 countries plus the Rest of the World and is available from 2007-2023.")
+
+#    st.markdown("The figure below summarizes the estimation strategy:")
+
+#    st.image("mrio_setup.png", caption="Demand estimation from the MRIO framework")
+
+#    st.markdown("The baseline model distinguishes between **Intermediate** versus **Final** demand goods supplied by **Domestic** or **Foreign** sectors representing a **2x2** system.")
+#    st.markdown("Additional results are presented in the paper including time series estimates and a detailed 6x2 sector decomposition. These will be added here in the future.")
+#    st.markdown("Please note that the paper also estimates the impact of tariff shocks using tariff data from 7th April 2025. Since this information is changing rapidly, results will be updated in the next version once tariff rates stabilize (currently planned for release in Summer 2025).")
+#    st.markdown("This project is supported by the [Supply Chain Intelligence Institute Austria (ASCII)](https://ascii.ac.at/). For comments and feedback either open an [Issue on GitHub](https://github.com/asjadnaqvi/elasticities/issues), or e-mail at asjad.naqvi@wifo.ac.at.")
+#    st.markdown("*This section was last updated on: 22 April 2025.*")    
+
+
+# FAQs tab
 with main_tabs[1]:
-    st.markdown("This dashboard shows _provisional results_ from the **Global demand and supply elasticities and the impact of tariff shocks** (v1) working paper posted on 14th April 2025.")
-    st.markdown("The paper can be downloaded either from the [WIFO Working Paper series](https://www.wifo.ac.at/en/publication/424385/) or [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5217187).")
-    st.markdown("The paper estimates a [Quadratic Almost Ideal Demand System (QUAIDS)](https://en.wikipedia.org/wiki/Almost_ideal_demand_system) demand and supply elasticities using the 2021-2023 pooled data from the Asian Development Bank's (ADB) [Multi-Regional Input-Output (MRIO)](https://www.adb.org/what-we-do/data/regional-input-output-tables) database. The database covers 62 countries plus the Rest of the World and is available from 2007-2023.")
+    st.markdown("## Frequently Asked Questions (FAQs)")
 
-    st.markdown("The figure below summarizes the estimation strategy:")
+    #st.markdown("For comments and feedback, you can either open an [Issue on GitHub](https://github.com/asjadnaqvi/elasticities/issues) or email me at asjad.naqvi@wifo.ac.at or asjadnaqvi@gmail.com.")
 
-    st.image("mrio_setup.png", caption="Demand estimation from the MRIO framework")
+    with st.expander("What is the purpose of this dashboard?"):
+        st.markdown("This dashboard provides a visual representation of the provisional results of the paper titled **Global Demand and Supply Elasticities and the Impact of Tariff Shocks**. The paper can be downloaded from [WIFO Working Paper series](https://www.wifo.ac.at/en/publication/424385/) or [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5217187).")
 
-    st.markdown("The baseline model distinguishes between **Intermediate** versus **Final** demand goods supplied by **Domestic** or **Foreign** sectors representing a **2x2** system.")
-    st.markdown("Additional results are presented in the paper including time series estimates and a detailed 6x2 sector decomposition. These will be added here in the future.")
-    st.markdown("Please note that the paper also estimates the impact of tariff shocks using tariff data from 7th April 2025. Since this information is changing rapidly, results will be updated in the next version once tariff rates stabilize (currently planned for release in Summer 2025).")
-    st.markdown("This project is supported by the [Supply Chain Intelligence Institute Austria (ASCII)](https://ascii.ac.at/). For comments and feedback either open an [Issue on GitHub](https://github.com/asjadnaqvi/elasticities/issues), or e-mail at asjad.naqvi@wifo.ac.at.")
-    st.markdown("*This section was last updated on: 22 April 2025.*")    
+    with st.expander("What is the source of the data?"):
+        st.markdown("The data is sourced from the Asian Development Bank's (ADB) [Multi-Regional Input-Output (MRIO)](https://www.adb.org/what-we-do/data/regional-input-output-tables) tables that are available from 2007-2023 and covers 62 countries plus the Rest of the World (RoW). To tbe best of my knowledge, this is currently the only MRIO database that provides stable real and nominal values that are required for elasticity estimation.")
+
+    with st.expander("Which years are used for the analysis shown on the dashboard?"):
+        st.markdown("The analysis uses pooled 2021-2023 data from the ADB's MRIO database. The reason to use pooled data is to ensure there are enough observations for estimating a fairly rigorous estimation procedure. Additionally, some sectors such as Energy and Services have few cross-country observations. Therefore, pooling helps minimizing spurious results that could arise from using a single year of data. Estimates for all three-year rolling periods (2007-2009, 2011-2013, 2025-2018, etc) are also available upon request. Results from different aggregations (1 year, 5 years, all years) are also discussed in the paper but not currently included in the dashboard. These might be added in a future version of the dashboard but are also available upon request.")
+
+    with st.expander("How are elasticities calculated?"):
+        st.markdown("Elasticities are estimated using the [Quadratic Almost Ideal Demand System (QUAIDS)](https://en.wikipedia.org/wiki/Almost_ideal_demand_system) model, which allows for flexible demand and supply elasticity estimation. Elasticity estimates from the *Translog*, the *Linear Expenditure System (LES)*, *Cobb Douglas*, and *AIDS* demand systems are also discussed in the paper but not currently included in the dashboard. These might be added in a future version of the dashboard but are available upon request.")
+
+    with st.expander("What is the estimation strategy?"):
+        st.markdown("The estimation strategy is based on the pooled 2021-2023 MRIO data and uses a **2x2** system to distinguish between **Intermediate** versus **Final** demand goods supplied by **Domestic** or **Foreign** sectors. The estimation is done using a QUAIDS model, which allows for flexible demand and supply elasticity estimation. Additional results for a detailed 6x2 sector decomposition are also discussed in the paper. These might be added to this dashboard in the future. The figure below summarizes the estimation strategy:")
+
+        st.image("mrio_setup.png", caption="Demand estimation from the MRIO framework")
+
+    with st.expander("How often are the results updated?"):
+        st.markdown("The esults are expected to be updated at least once a year depending on how often the MRIO database is updated or whether other comprable datasets become available.")
+    
+    with st.expander("Who can I contact for feedback?"):
+        st.markdown("For comments and feedback, you can either open an [Issue on GitHub](https://github.com/asjadnaqvi/elasticities/issues) or email me at asjad.naqvi@wifo.ac.at or asjadnaqvi@gmail.com.")
+
+
+    st.markdown("This project is supported by the [Supply Chain Intelligence Institute Austria (ASCII)](https://ascii.ac.at/). For comments and feedback either open an [Issue on GitHub](https://github.com/asjadnaqvi/elasticities/issues), or e-mail at asjad.naqvi@wifo.ac.at or asjadnaqvi@gmail.com.")
+    st.markdown("*Last updated on: 12 June 2025.*")  
+
+
+# Main dashboard
 
 with main_tabs[0]:
 
-# Load data
-# Variable labels for clarity in plots
+    # Variable labels for clarity in plots
     variable_labels = {
         "share1": "Intermediate - Domestic",
         "share2": "Intermediate - Foreign",
@@ -67,7 +105,6 @@ with main_tabs[0]:
     if "name2" in df.columns:
         df["name2"] = df["name2"].astype(str).str.strip()
 
-
     # Split data into demand and supply
     if 'type' in df.columns:
         df_demand = df[df['type'] == 'demand']
@@ -94,7 +131,6 @@ with main_tabs[0]:
 
     if demand_group.empty:
         st.warning("No demand‑side data available for the selected country.")
-        # st.write(f"Rows in df_demand for '{country}':", len(df_demand[df_demand[\"name2\"] == country]))
         st.stop()
 
     # Extract values
@@ -129,17 +165,17 @@ with main_tabs[0]:
     ]
 
     mean_prices_demand = [
-        round((demand_group["val1"] * demand_group["price1"]).sum() / demand_group["val1"].sum(), 2) if demand_group["val1"].sum() != 0 else np.nan,
-        round((demand_group["val2"] * demand_group["price2"]).sum() / demand_group["val2"].sum(), 2) if demand_group["val2"].sum() != 0 else np.nan,
-        round((demand_group["val3"] * demand_group["price3"]).sum() / demand_group["val3"].sum(), 2) if demand_group["val3"].sum() != 0 else np.nan,
-        round((demand_group["val4"] * demand_group["price4"]).sum() / demand_group["val4"].sum(), 2) if demand_group["val4"].sum() != 0 else np.nan
+        round((demand_group["val1"] * demand_group["price1"]).sum() / demand_group["val1"].sum(), 3) if demand_group["val1"].sum() != 0 else np.nan,
+        round((demand_group["val2"] * demand_group["price2"]).sum() / demand_group["val2"].sum(), 3) if demand_group["val2"].sum() != 0 else np.nan,
+        round((demand_group["val3"] * demand_group["price3"]).sum() / demand_group["val3"].sum(), 3) if demand_group["val3"].sum() != 0 else np.nan,
+        round((demand_group["val4"] * demand_group["price4"]).sum() / demand_group["val4"].sum(), 3) if demand_group["val4"].sum() != 0 else np.nan
     ] 
 
     mean_prices_supply= [
-        round((supply_group["val1"] * supply_group["price1"]).sum() / supply_group["val1"].sum(), 2) if supply_group["val1"].sum() != 0 else np.nan,
-        round((supply_group["val2"] * supply_group["price2"]).sum() / supply_group["val2"].sum(), 2) if supply_group["val2"].sum() != 0 else np.nan,
-        round((supply_group["val3"] * supply_group["price3"]).sum() / supply_group["val3"].sum(), 2) if supply_group["val3"].sum() != 0 else np.nan,
-        round((supply_group["val4"] * supply_group["price4"]).sum() / supply_group["val4"].sum(), 2) if supply_group["val4"].sum() != 0 else np.nan
+        round((supply_group["val1"] * supply_group["price1"]).sum() / supply_group["val1"].sum(), 3) if supply_group["val1"].sum() != 0 else np.nan,
+        round((supply_group["val2"] * supply_group["price2"]).sum() / supply_group["val2"].sum(), 3) if supply_group["val2"].sum() != 0 else np.nan,
+        round((supply_group["val3"] * supply_group["price3"]).sum() / supply_group["val3"].sum(), 3) if supply_group["val3"].sum() != 0 else np.nan,
+        round((supply_group["val4"] * supply_group["price4"]).sum() / supply_group["val4"].sum(), 3) if supply_group["val4"].sum() != 0 else np.nan
     ] 
 
     # Global mean values (weighted by total expenditure)
@@ -164,17 +200,17 @@ with main_tabs[0]:
 
 
     global_mean_prices_demand = [
-        round((df_demand["val1"] * df_demand["price1"]).sum() / df_demand["val1"].sum(), 2) if df_demand["val1"].sum() != 0 else np.nan,
-        round((df_demand["val2"] * df_demand["price2"]).sum() / df_demand["val2"].sum(), 2) if df_demand["val2"].sum() != 0 else np.nan,
-        round((df_demand["val3"] * df_demand["price3"]).sum() / df_demand["val3"].sum(), 2) if df_demand["val3"].sum() != 0 else np.nan,
-        round((df_demand["val4"] * df_demand["price4"]).sum() / df_demand["val4"].sum(), 2) if df_demand["val4"].sum() != 0 else np.nan
+        round((df_demand["val1"] * df_demand["price1"]).sum() / df_demand["val1"].sum(), 3) if df_demand["val1"].sum() != 0 else np.nan,
+        round((df_demand["val2"] * df_demand["price2"]).sum() / df_demand["val2"].sum(), 3) if df_demand["val2"].sum() != 0 else np.nan,
+        round((df_demand["val3"] * df_demand["price3"]).sum() / df_demand["val3"].sum(), 3) if df_demand["val3"].sum() != 0 else np.nan,
+        round((df_demand["val4"] * df_demand["price4"]).sum() / df_demand["val4"].sum(), 3) if df_demand["val4"].sum() != 0 else np.nan
     ] 
 
     global_mean_prices_supply = [
-        round((df_supply["val1"] * df_supply["price1"]).sum() / df_supply["val1"].sum(), 2) if df_supply["val1"].sum() != 0 else np.nan,
-        round((df_supply["val2"] * df_supply["price2"]).sum() / df_supply["val2"].sum(), 2) if df_supply["val2"].sum() != 0 else np.nan,
-        round((df_supply["val3"] * df_supply["price3"]).sum() / df_supply["val3"].sum(), 2) if df_supply["val3"].sum() != 0 else np.nan,
-        round((df_supply["val4"] * df_supply["price4"]).sum() / df_supply["val4"].sum(), 2) if df_supply["val4"].sum() != 0 else np.nan
+        round((df_supply["val1"] * df_supply["price1"]).sum() / df_supply["val1"].sum(), 3) if df_supply["val1"].sum() != 0 else np.nan,
+        round((df_supply["val2"] * df_supply["price2"]).sum() / df_supply["val2"].sum(), 3) if df_supply["val2"].sum() != 0 else np.nan,
+        round((df_supply["val3"] * df_supply["price3"]).sum() / df_supply["val3"].sum(), 3) if df_supply["val3"].sum() != 0 else np.nan,
+        round((df_supply["val4"] * df_supply["price4"]).sum() / df_supply["val4"].sum(), 3) if df_supply["val4"].sum() != 0 else np.nan
     ] 
 
     # Manually define the scale values
@@ -212,6 +248,12 @@ with main_tabs[0]:
     st.markdown("### Expenditure Shares and Prices")
     st.markdown('The plots below show expenditure shares and prices (unit costs) split by demand and supply extracted from the pooled 2021-2023 MRIO data (see Notes tab above). Heatmaps shows averages while Detailed plots show the full data distribution.')
     st.markdown("Average shares add up to one in the demand and supply columns respectively. Prices are calculated as nominal over real values and are effectively relative unit values.")
+
+
+    #####################################
+    #### detailed plots - top panel   ###
+    #####################################
+
 
     if view_mode == "Detailed Plots":
         
@@ -288,7 +330,6 @@ with main_tabs[0]:
                 ))
             fig3.update_layout(
                 title="Expenditure Shares (Supply)",
-                # shapes=[dict(type="line", y0=0.5, y1=0.5, x0=-0.5, x1=3.5, line=dict(color="black", dash="solid", width=0.4))],
                 yaxis_title="Share",
                 yaxis_tickformat=".2f",
                 width=1000,
@@ -515,34 +556,20 @@ with main_tabs[0]:
         legend=dict(orientation="h", yanchor="bottom", y=-0.3, xanchor="center", x=0.5)
     )
 
+
+    #####################################
+    ####    heatmaps - top panel   ###
+    #####################################
+
     if view_mode == "Heatmaps":
-        # st.markdown("### Heatmap Summaries")
 
         top_row_1 = st.container()
-        #bot_row_1, bot_row_2 = st.columns([1, 1])
 
         with top_row_1:
-            # st.markdown("### Mean Shares and Prices")
             share_col, price_col = st.columns(2)
 
         with share_col:
-            # supply_group already defined globally; duplicate removed
-            if all(col in supply_group.columns for col in ["val1", "val2", "val3", "val4"]):
-                total_val_supply = supply_group[["val1", "val2", "val3", "val4"]].sum().sum()
-                mean_expenditures_supply = [
-                    round(supply_group["val1"].sum() / total_val_supply, 3) if total_val_supply != 0 else np.nan,
-                    round(supply_group["val2"].sum() / total_val_supply, 3),
-                    round(supply_group["val3"].sum() / total_val_supply, 3),
-                    round(supply_group["val4"].sum() / total_val_supply, 3)
-                ]
-            elif all(f"share{i+1}" in supply_group.columns for i in range(4)):
-                mean_expenditures_supply = [
-                    round(supply_group[f"share{i+1}"].mean(), 3) for i in range(4)
-                ]
-            else:
-                st.warning("Supply data for expenditure shares is not available for this country.")
-                mean_expenditures_supply = [np.nan] * 4
-
+            # Use already calculated mean_expenditures_demand and mean_expenditures_supply
             combined_data = np.column_stack([mean_expenditures_demand, mean_expenditures_supply])
             fig_share_combined = px.imshow(
                 combined_data,
@@ -558,17 +585,7 @@ with main_tabs[0]:
             st.plotly_chart(fig_share_combined, use_container_width=True, key="fig_share_combined")
 
         with price_col:
-            if all(col in supply_group.columns for col in ["val1", "val2", "val3", "val4"]):
-                total_val_supply = supply_group[["val1", "val2", "val3", "val4"]].sum().sum()
-                mean_prices_supply = [
-                    round((supply_group["val1"] * supply_group["price1"]).sum() / supply_group["val1"].sum(), 2) if supply_group["val1"].sum() != 0 else np.nan,
-                    round((supply_group["val2"] * supply_group["price2"]).sum() / supply_group["val2"].sum(), 2),
-                    round((supply_group["val3"] * supply_group["price3"]).sum() / supply_group["val3"].sum(), 2),
-                    round((supply_group["val4"] * supply_group["price4"]).sum() / supply_group["val4"].sum(), 2)
-                ]
-            else:
-                mean_prices_supply = [np.nan] * 4
-
+            # Use already calculated mean_prices_demand and mean_prices_supply
             combined_price_data = np.column_stack([mean_prices_demand, mean_prices_supply])
             fig_price_combined = px.imshow(
                 combined_price_data,
@@ -584,13 +601,17 @@ with main_tabs[0]:
             st.plotly_chart(fig_price_combined, use_container_width=True, key="fig_price_combined")
 
 
+
+    #### bottom panel ######
+
     st.markdown("### Elasticities")
     st.markdown("Elasticities are generated from a QUAIDS model using the pooled 2021-2023 MRIO data (see Notes). Results are split into Expenditure ($\\eta$) and Uncompensated Price ($\\epsilon^c$) elasticities. These are further split by demand and supply groups. Heatmaps show averages while Detailed Plots show the full distribution of the estimates.")
 
-    st.markdown("Expenditure elasticities: $\\eta >1$ is a luxury good, $\\eta \\in [0,1]$ is a normal good, $\\eta<0$ is an inferior good.")
-    st.markdown("Own-price elasticities (diagonal): $\\epsilon_{ii} < -1$ is elastic demand, $\\epsilon_{ii} \\in [-1,0]$ is inelastic demand.")
-    st.markdown("Cross-price elasticities (off-diagonal): $\\epsilon_{ij} < 0$ are substitutes, $\\epsilon_{ij} > 0$ are complements.")
 
+
+    #########################################
+    ###   Detailed plots - bottom panel   ###
+    #########################################   
     
     if view_mode == "Detailed Plots":
 
@@ -601,7 +622,6 @@ with main_tabs[0]:
         with eta_col2:
             st.plotly_chart(eta2, use_container_width=True, key="eta_supply")
 
-        # st.markdown("### Price Elasticities")
         col_price_demand_box, col_price_supply_box = st.columns(2)
 
         with col_price_demand_box:
@@ -700,15 +720,16 @@ with main_tabs[0]:
                 )
                 st.plotly_chart(fig_supply, use_container_width=True, key=f"fig_price_supply_{q}")
 
-
+    ###################################
+    ###   Heatmaps - bottom panel   ###
+    ###################################
 
     if view_mode == "Heatmaps":
 
         bot_row_1 = st.container()
-        # bot_row_1 = st.columns([1, 1])
 
         with bot_row_1:
-            # st.markdown("### Mean Expenditure Elasticity")
+            
             supply_eta_array = np.array(mean_elasticities2).reshape(-1, 1)
             eta_means = np.column_stack([mean_elasticities, mean_elasticities2])
             fig_eta_heat = px.imshow(
@@ -721,8 +742,9 @@ with main_tabs[0]:
                 text_auto=".2f",
                 labels=dict(color="Elasticity")
             )
-            fig_eta_heat.update_layout(height=400, title="Expenditure Elasticities")
+            fig_eta_heat.update_layout(height=400, title="Expenditure/Income Elasticities")
             st.plotly_chart(fig_eta_heat)
+            st.markdown("*Notes: $\\eta < 0$ is inferior good,  $0 < \\eta < 1$  is normal good, and $\\eta > 1$  is luxury good.*")
 
 
         price_elasticity_row = st.container()
@@ -774,3 +796,254 @@ with main_tabs[0]:
                 )
                 fig_heat_supply.update_layout(height=400, title="Uncompensated Price Elasticities (Supply)")
                 st.plotly_chart(fig_heat_supply, use_container_width=True, key="fig_price_supply")
+            
+            st.markdown("*Notes: $\\epsilon_{ii} = 0$ is perfectly inelastic, $-1 <  \\epsilon_{ii} < 0$  is inelastic,  $\\epsilon_{ii}< -1$   is elastic,  $\\epsilon_{ii} \\rightarrow -\\infty$ is perfectly elastic. $\\epsilon_{ij} > 0$ are substitutes, $\\epsilon_{ij} < 0$ are complements.*")
+
+    # Define helper functions
+    def classify_price_elasticity(val):
+        if val <= -6:
+            return "perfectly elastic"
+        elif -6 < val <= -1:
+            return "relatively elastic"
+        elif -1 < val < 0:
+            return "relatively inelastic"
+        elif val == 0:
+            return "perfectly inelastic"
+        else:
+            return "undefined"
+
+    def classify_income_elasticity(val):
+        if val < 0:
+            return "Inferior good"
+        elif val < 1:
+            return "Normal good with relatively inelastic income demand (necessity)"
+        else:
+            return "Normal good with relatively elastic income demand (luxury)"   
+
+    def classify_cross_effects(cross_vals):
+        max_val = max(cross_vals)
+        min_val = min(cross_vals)
+        if max_val > 0.2 and min_val < -0.2:
+            return "substitution possible with other sectors (risk mitigation) but complementarity with other sectors also implies potential risk amplification"
+        elif max_val > 0.2:
+            return "substitution possible with other sectors (risk mitigation)"
+        elif min_val < -0.2:
+            return "strong complementarity with other sectors implies potential risk amplification"
+        else:
+            return "shows weak or neutral cross-price relationships (high risk sector)"
+
+    # Good types mapping
+    good_types = {
+        1: "Intermediate Domestic",
+        2: "Intermediate Foreign",
+        3: "Final Domestic",
+        4: "Final Foreign"
+    }
+
+    # Filter and prepare data
+    # Use the correct country code column for summaries
+    # Try both 'iso3' and 'country' columns for compatibility
+    if 'iso3' in df.columns and 'name2' in df.columns:
+        iso_to_name = dict(zip(df['iso3'].astype(str), df['name2'].astype(str)))
+        country_code_col = 'iso3'
+    elif 'country' in df.columns and 'name2' in df.columns:
+        iso_to_name = dict(zip(df['country'].astype(str), df['name2'].astype(str)))
+        country_code_col = 'country'
+    else:
+        iso_to_name = {}
+        country_code_col = None
+
+    elasticity_cols = ['iso3', 'type', 'ef_s1'] + \
+        [f'eta_{i}' for i in range(1, 5)] + \
+        [f'epsilon_{i}_{j}' for i in range(1, 5) for j in range(1, 5)]
+
+    df_elasticities = df[elasticity_cols].copy()
+    df_elasticities['type'] = df_elasticities['type'].astype(str).str.strip().str.lower()
+    avg_elasticities = df_elasticities.groupby([country_code_col, 'type']).mean(numeric_only=True).reset_index()
+
+    # Generate summaries
+    summaries = {}
+
+    for iso in avg_elasticities[country_code_col].unique():
+        iso_str = str(iso)
+        country_data = avg_elasticities[avg_elasticities[country_code_col] == iso]
+        demand_row = country_data[country_data['type'] == 'demand']
+        supply_row = country_data[country_data['type'] == 'supply']
+        if demand_row.empty or supply_row.empty:
+            continue
+
+        summary_lines = [f"### Summary of results"]
+
+
+
+        for i in range(1, 5):
+            good = good_types[i]
+            d_price = demand_row[f'epsilon_{i}_{i}'].values[0]
+            d_income = demand_row[f'eta_{i}'].values[0]
+            s_price = supply_row[f'epsilon_{i}_{i}'].values[0]
+            s_income = supply_row[f'eta_{i}'].values[0]
+
+            d_price_class = classify_price_elasticity(d_price)
+            d_income_class = classify_income_elasticity(d_income)
+            s_price_class = classify_price_elasticity(s_price)
+            s_income_class = classify_income_elasticity(s_income)
+
+            d_cross = [demand_row[f'epsilon_{i}_{j}'].values[0] for j in range(1, 5) if j != i]
+            s_cross = [supply_row[f'epsilon_{i}_{j}'].values[0] for j in range(1, 5) if j != i]
+            d_cross_desc = classify_cross_effects(d_cross)
+            s_cross_desc = classify_cross_effects(s_cross)
+
+            # Income shock impact
+            if d_income < 0 and s_income < 0:
+                income_impact = "Both demand and supply respond negatively to income increases."
+            elif d_income >= 1 and s_income >= 1:
+                income_impact = "Both demand and supply are highly responsive to income , income shocks will have strong effects."
+            elif d_income < 1 and s_income < 1:
+                income_impact = "Both demand and supply are inelastic to income, income shocks will have limited effects."
+            elif d_income >= 1:
+                income_impact = "Income shocks mainly affect demand as it is more income elastic than supply."
+            elif s_income >= 1:
+                income_impact = "Income shocks mainly affect supply as it is more income elastic than demand."
+            else:
+                income_impact = "Mixed income responsiveness between demand and supply."
+
+            # Own price shock impact
+            if d_price <= -6 and s_price <= -6:
+                price_impact = (
+                    "Both demand and supply are perfectly price elastic. Price shocks will lead to large quantity changes on both sides."
+                )
+            elif d_price <= -6:
+                price_impact = (
+                    "Demand is perfectly price elastic (highly responsive), while supply is less responsive. Price shocks will primarily impact demand quantities."
+                )
+            elif s_price <= -6:
+                price_impact = (
+                    "Supply is perfectly price elastic (highly responsive), while demand is less responsive. Price shocks will primarily impact supply quantities."
+                )
+            elif -6 < d_price <= -1 and -6 < s_price <= -1:
+                price_impact = (
+                    "Both demand and supply are relatively price elastic. Price shocks will significantly affect quantities on both sides."
+                )
+            elif -6 < d_price <= -1:
+                price_impact = (
+                    "Demand is relatively price elastic (responsive), while supply is less so. Price shocks will mainly affect demand quantities."
+                )
+            elif -6 < s_price <= -1:
+                price_impact = (
+                    "Supply is relatively price elastic (responsive), while demand is less so. Price shocks will mainly affect supply quantities."
+                )
+            elif -1 < d_price < 0 and -1 < s_price < 0:
+                price_impact = (
+                    "Both demand and supply are relatively price inelastic. Price shocks will have limited effects on quantities."
+                )
+            elif -1 < d_price < 0:
+                price_impact = (
+                    "Demand is relatively price inelastic (less responsive), while supply is more elastic. Price shocks will have limited impact on demand."
+                )
+            elif -1 < s_price < 0:
+                price_impact = (
+                    "Supply is relatively price inelastic (less responsive), while demand is more elastic. Price shocks will have limited impact on supply."
+                )
+            elif d_price == 0 and s_price == 0:
+                price_impact = (
+                    "Both demand and supply are perfectly price inelastic. Price shocks will not affect quantities on either side."
+                )
+            elif d_price == 0:
+                price_impact = (
+                    "Demand is perfectly price inelastic (no response), while supply is more responsive. Price shocks will not affect demand quantities."
+                )
+            elif s_price == 0:
+                price_impact = (
+                    "Supply is perfectly price inelastic (no response), while demand is more responsive. Price shocks will not affect supply quantities."
+                )
+            else:
+                price_impact = (
+                    "Demand and supply responsiveness is mixed or undefined. The impact of price shocks will vary depending on relative elasticities."
+                )
+
+            # Cross-price shock impact
+            if "substitution" in d_cross_desc or "substitution" in s_cross_desc:
+                cross_impact = "Cross-price elasticities indicate potential for substitution with other sectors, allowing for risk mitigation."
+            elif "complementarity" in d_cross_desc or "complementarity" in s_cross_desc:
+                cross_impact = "Cross-price elasticities indicate strong complementarity, potentially amplifying risk from shocks across related sectors."
+            else:
+                cross_impact = "Cross-price elasticities are weak or neutral, indicating limited risk transmission across sectors."
+
+
+
+            summary_lines.append(
+                f"- **{good}**\n"
+                f"    - Demand: *{d_income_class}* (η = {d_income:.2f}), *{d_price_class}* to own prices (ε = {d_price:.2f}).\n"
+                f"    - Supply: *{s_income_class}* (η = {s_income:.2f}), *{s_price_class}* to own prices (ε = {s_price:.2f}).\n"
+                f"    - Impact of income shock: {income_impact}\n"
+                f"    - Impact of price shock: {price_impact} {cross_impact}\n"
+            )
+
+
+            # driver = "demand" if d_price > s_price else "supply"
+
+            # sector_importance = "high dependence" if d_price > 1 or s_price > 1 else "moderate to low dependence"
+
+            # summary_lines.append(
+            #    f"- **{good}**: Demand is {d_price_class} to prices (ε = {d_price:.2f}) and shows {d_income_class} (η = {d_income:.2f}). "
+            #    f"Supply is {s_price_class} to prices (ε = {s_price:.2f}) and shows {s_income_class} (η = {s_income:.2f}). "
+            #    f"A price shock is likely to be absorbed primarily through the *{driver} side*."
+            #)
+
+            #summary_lines.append(
+            #    f"- **{good}**\n    - Demand: *{d_income_class}* (η = {d_income:.2f}), *{d_price_class}* to own prices (ε = {d_price:.2f}). Cross price elasticities indicate *{d_cross_desc}*.\n  - Supply: *{s_income_class}* (η = {s_income:.2f}), *{s_price_class}* to own prices (ε = {s_price:.2f}). Cross price elasticities indicate *{s_cross_desc}*. \n  - A price shock is likely to be absorbed through the *{driver} side*."
+            #)
+
+        #d_avg_price = demand_row[[f'epsilon_{i}_{i}' for i in range(1, 5)]].mean(axis=1).values[0]
+        #s_avg_price = supply_row[[f'epsilon_{i}_{i}' for i in range(1, 5)]].mean(axis=1).values[0]
+
+        #if d_avg_price > s_avg_price:
+        #    shock_channel = "demand-side channels"
+        #else:
+        #    shock_channel = "supply-side channels"
+
+        #d_avg_income = demand_row[[f'eta_{i}' for i in range(1, 5)]].mean(axis=1).values[0]
+        #s_avg_income = supply_row[[f'eta_{i}' for i in range(1, 5)]].mean(axis=1).values[0]
+
+        #if d_avg_price + d_avg_income > s_avg_price + s_avg_income:
+        #    income_dynamic = "households"
+        #else:
+        #    income_dynamic = "firms"
+
+        #summary_lines.append("")
+
+        #summary_lines.append(
+        #    f"**Overall**, "
+            #f"**Overall**, demand and supply show average price elasticities of {d_avg_price:.2f} and {s_avg_price:.2f}, respectively. "
+            #f"Average income elasticities are {d_avg_income:.2f} (demand) and {s_avg_income:.2f} (supply). "
+        #    f"these results suggest that price shocks are most likely to propagate through *{shock_channel}*, requiring policies targeting *{income_dynamic}*."
+        #)
+
+        #summary_lines.append("")
+        #summary_lines.append(
+        #    f"**Overall**, market dynamics reflect average **demand elasticities** of ε = {d_avg_price:.2f}, η = {d_avg_income:.2f} and **supply elasticities** of ε = {s_avg_price:.2f}, η = {s_avg_income:.2f}. "
+        #    f"This suggests that both price and income shocks will propagate through a mix of consumer and producer responses, with a slightly greater influence from the " + 
+        #    ("*demand*" if (d_avg_price + d_avg_income) > (s_avg_price + s_avg_income) else "*supply*") + " side,"
+        #    f" requiring policies targeted more towards *{income_dynamic}*."
+        #)        
+
+        #if d_avg_income > s_avg_income and d_avg_price <= s_avg_price:
+        #    overall_msg = "Demand appears more responsive to income, while supply is more reactive to prices, indicating the need for coordinated policy attention across both consumers and producers."
+        #elif d_avg_income > s_avg_income:
+        #    overall_msg = "Demand show a stronger responsiveness to income changes, while price dynamics play a larger role on the supply side."
+        #elif s_avg_income > d_avg_income:
+        #    overall_msg = "Producers are more sensitive to both income and price changes, suggesting that production-side policies are needed."
+        #else:
+        #    overall_msg = "Elasticity patterns suggest a mixed or inconclusive response, and both demand and supply channels may be important depending on the type of shock."
+
+        #summary_lines.append(f"**Overall**, {overall_msg}")
+
+        country_name = iso_to_name.get(iso_str, iso_str)
+        summaries[country_name] = "\n".join(summary_lines)
+
+    # Streamlit interface
+    # Use the country name from the sidebar selectbox for lookup
+    if country in summaries:
+        st.markdown(summaries[country])
+    else:
+        st.warning("Elasticity summary not available for the selected country.")
